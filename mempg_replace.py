@@ -45,28 +45,28 @@ if i not in mem_layout:
 	if not None in mem_status:
 		finished = False
 		for j in range(2):
-			for k in range(NUM_OF_FRAMES):
+			for k in range(NUM_OF_FRAMES):  # look for (0,0)
 				if mem_status[ptr] == [0, 0]:
 					finished = True
 					break
 				ptr = (ptr+1)%NUM_OF_FRAMES
 			if finished:
 				break
-			for k in range(NUM_OF_FRAMES):
+			for k in range(NUM_OF_FRAMES):  # look for (0, 1)
 				if mem_status[ptr] == [0, 1]:
 					finished = True
 					break
 				else:
-					mem_status[ptr][0] = 0
+					mem_status[ptr][0] = 0  # reset reference bit
 				ptr = (ptr+1)%NUM_OF_FRAMES
 			if finished:
 				break
 	mem_layout[ptr] = i
-	mem_status[ptr] = [0, 0]
+	mem_status[ptr] = [1, random.randint(0, 1)]
 	ptr = (ptr+1)%NUM_OF_FRAMES
 else:
 	idx = mem_layout.index(i)
-	mem_status[idx] = [1, random.randint(mem_status[idx][1],1)]
+	mem_status[idx] = [1, random.randint(mem_status[idx][1], 1)]
 """
 
 
@@ -82,7 +82,7 @@ if i not in mem_layout:
 				mem_status[ptr] = 0
 			ptr = (ptr+1)%NUM_OF_FRAMES
 	mem_layout[ptr] = i
-	mem_status[ptr] = 0
+	mem_status[ptr] = 1
 	ptr = (ptr+1)%NUM_OF_FRAMES
 else:
 	mem_status[mem_layout.index(i)] = 1
