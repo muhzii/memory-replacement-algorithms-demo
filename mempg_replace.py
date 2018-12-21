@@ -26,7 +26,7 @@ lfu = \
 if i not in mem_layout:
 	faults += 1	
 	if None in mem_status:
-		idx = ptr
+		idx = mem_status.index(None)
 	else:
 		flt = [i for i in mem_status if i[0] == min(mem_status, key=lambda x: x[0])[0]]
 		idx = mem_status.index(min(flt, key=lambda x: x[1]))
@@ -93,7 +93,8 @@ opt = \
 """
 if i not in mem_layout:
 	faults += 1
-	idx = mem_status.index(max(mem_status)) if None not in mem_status else ptr
+	idx = \
+		mem_status.index(max(mem_status)) if None not in mem_status else mem_status.index(None)
 	mem_layout[idx] = i
 mem_status[mem_layout.index(i)] = \
 	refs.index(i, ptr+1) if i in refs[ptr+1:] else len(refs)
@@ -105,7 +106,8 @@ lru = \
 """
 if i not in mem_layout:
 	faults += 1
-	idx = mem_status.index(min(mem_status)) if None not in mem_status else ptr
+	idx = \
+		mem_status.index(min(mem_status)) if None not in mem_status else mem_status.index(None)
 	mem_layout[idx] = i 
 mem_status[mem_layout.index(i)] = ptr
 ptr += 1
